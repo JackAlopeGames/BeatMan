@@ -6,7 +6,7 @@
 		_Noise("Noise", 2D) = "white" {}
 		_Lines("Lines", 2D) = "white" {}
 		_Color("Hologram Color", Color) = (0,0,1)
-		_RimPower("Rim Power", Range(0,6)) = 0.5
+		_RimPower("Rim Power", Range(0,10)) = 0.5
 		_RimColor("Rim Color", Color) = (1,1,1,1)
 		_Tilling("Tilling", Range(0,6)) = 1
 		_Transparency("Transparency", Range(0.0,1)) = 0.25

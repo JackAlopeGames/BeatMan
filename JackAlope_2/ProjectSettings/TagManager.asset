@@ -81,6 +81,7 @@ TagManager:
   - BG_Tutorial
   - CameraFather
   - AreaSpot1
+  - Delta
   layers:
   - Default
   - TransparentFX

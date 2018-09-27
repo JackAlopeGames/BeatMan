@@ -15,6 +15,7 @@ public class CheckIfDojoPassMenu : MonoBehaviour {
         {
             if (SavingSystem.GetComponent<SavingSystem>().DojoPass == false)
             {
+                StartCoroutine(WaitToGive18());
                 PlayButton.GetComponent<Button>().onClick.Invoke();
                 MaskMonitor.SetActive(true);
                 HandAnim.SetActive(true);
@@ -22,6 +23,16 @@ public class CheckIfDojoPassMenu : MonoBehaviour {
         }
         catch { }
 	}
+
+    IEnumerator WaitToGive18()
+    {
+        yield return new WaitForSeconds(.5f);
+        GameObject BC = GameObject.FindGameObjectWithTag("BannerController");
+        if (BC.GetComponent<ThunderLoading>().ThunderCount != 18 && BC.GetComponent<ThunderLoading>().ThunderCount != 20)
+        {
+            BC.GetComponent<ThunderLoading>().ThunderCount = 18;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -12,17 +12,24 @@ public class Save : MonoBehaviour {
     private GameObject SavingSystem;
 
 	void OnEnable () {
-        SaveNow();
+       // SaveNow();
 	}
 
     public void SaveNow()
     {
+        GameObject BC = GameObject.FindGameObjectWithTag("BannerController");
+        if (BC.GetComponent<ThunderLoading>().ThunderCount != 18 && BC.GetComponent<ThunderLoading>().ThunderCount != 20)
+        {
+            BC.GetComponent<ThunderLoading>().ThunderCount += 18;
+        }
         this.SavingSystem = GameObject.FindGameObjectWithTag("SavingSystem");
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/ScoreSavig.dat");
         SaveData data = new SaveData();
         bf.Serialize(file, data);
         file.Close();
+        this.SavingSystem.GetComponent<SavingSystem>().Thunders += 18;
+
         this.SavingSystem.GetComponent<SavingSystem>().Save();
         StartCoroutine(ShowAnim());
     }

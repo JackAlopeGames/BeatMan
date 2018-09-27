@@ -21,6 +21,10 @@ public class ThunderLoading : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (ThunderCount == 0)
+        {
+            this.Thunders.GetComponent<Text>().text = ThunderCount + "/20";
+        }
         if (ThunderCount < 20)
         {
             Sec -= Time.deltaTime;

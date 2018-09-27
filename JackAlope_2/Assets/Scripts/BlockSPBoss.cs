@@ -5,7 +5,7 @@ using UnityEngine;
 public class BlockSPBoss : MonoBehaviour {
 
     public GameObject Instrunction;
-    int cont;
+    public GameObject CounterRespawn;
     // Use this for initialization
     void Start () {
 		
@@ -15,10 +15,10 @@ public class BlockSPBoss : MonoBehaviour {
 	void Update () {
 		
 	}
-
-    private bool EveryoneIsDead;
+    
     public void CheckForWave()
     {
+        /*
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
       
         
@@ -50,6 +50,11 @@ public class BlockSPBoss : MonoBehaviour {
         {
             StartCoroutine(showInstruction());
             EveryoneIsDead = false;
+        }*/
+
+        if(this.GetComponent<GainEnergy>().EnemyToAttack == this.GetComponent<GainEnergy>().player || CounterRespawn.activeInHierarchy)
+        {
+            ShowInstru();
         }
     }
 

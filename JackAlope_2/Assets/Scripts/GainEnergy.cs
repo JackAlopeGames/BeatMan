@@ -23,6 +23,7 @@ public class GainEnergy : MonoBehaviour {
     public Vector3[] Origins;
     public GameObject SwipeControls;
     bool dontchangeEnemy;
+    public float limit0, limit1;
 
     void Start () {
         this.player = GameObject.FindGameObjectWithTag("Player");
@@ -83,8 +84,6 @@ public class GainEnergy : MonoBehaviour {
         }
 
         this.GetComponent<Slider>().value = 0;
-            
-        this.player = GameObject.FindGameObjectWithTag("Player");
 
         for (int i = 0; i < enemies.Length; i++)
         {
@@ -100,14 +99,26 @@ public class GainEnergy : MonoBehaviour {
         this.player.GetComponent<Rigidbody>().isKinematic = true;
         this.player.GetComponent<CapsuleCollider>().enabled = false;
         this.Mask.SetActive(true);
-        this.EnemyToAttack.transform.rotation = Quaternion.Euler( new Vector3(0, 0, 0));
+        //this.EnemyToAttack.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         StartCoroutine(waitToSpecial());
     }
+
+    bool isPlayerToTheRight;
 
     IEnumerator waitToSpecial()
     {
         yield return new WaitForEndOfFrame();
         this.player.transform.GetChild(0).GetComponent<Animator>().SetTrigger("SpecialAttack");
+        if (player.transform.position.x < this.EnemyToAttack.transform.position.x)
+        {
+            isPlayerToTheRight = true;
+            this.EnemyToAttack.transform.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
+        else
+        {
+            isPlayerToTheRight = false;
+            this.EnemyToAttack.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
         yield return new WaitForSeconds(2);
         if (!EnemyToAttack.GetComponent<EnemyAI>().isDead)
         {
@@ -116,11 +127,34 @@ public class GainEnergy : MonoBehaviour {
             
             try
             {
-                this.EnemyToAttack.transform.position = new Vector3(this.player.transform.position.x - 3.5f, this.EnemyToAttack.transform.position.y, (this.playerSP.transform.position.z));
+              //  this.EnemyToAttack.transform.position = new Vector3(this.player.transform.position.x - 3.5f, this.EnemyToAttack.transform.position.y, (this.playerSP.transform.position.z));
             }
             catch { }
-            
-            GameObject playerspClone = Instantiate(this.playerSP, new Vector3(this.player.transform.position.x + 3.5f, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.identity);
+
+            GameObject playerspClone = null;
+            if (isPlayerToTheRight)
+            {
+                if(this.EnemyToAttack.transform.position.x - 7f < limit1) {
+                    playerspClone = Instantiate(this.playerSP, new Vector3(limit1, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+                }
+                else
+                {
+                    playerspClone = Instantiate(this.playerSP, new Vector3(this.EnemyToAttack.transform.position.x - 7f, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.Euler(new Vector3(0, 0, 0)));
+                }
+            }
+            else
+            {
+                if(this.EnemyToAttack.transform.position.x + 7f > limit0)
+                {
+                    playerspClone = Instantiate(this.playerSP, new Vector3(limit0, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.Euler(new Vector3(0, 180, 0)));
+                }
+                else
+                {
+                    playerspClone = Instantiate(this.playerSP, new Vector3(this.EnemyToAttack.transform.position.x + 7f, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.Euler(new Vector3(0, 180, 0)));
+                }
+            }
+         
+            //  GameObject playerspClone = Instantiate(this.playerSP, new Vector3(this.player.transform.position.x + 3.5f, this.playerSP.transform.position.y, this.playerSP.transform.position.z), Quaternion.identity);
            
             playerspClone.transform.GetChild(0).GetComponent<Animator>().SetTrigger("RawRage");
             yield return new WaitForSeconds(2);
@@ -168,7 +202,7 @@ public class GainEnergy : MonoBehaviour {
         }
         else
         {
-           
+            this.GetComponent<BlockSPBoss>().ShowInstru();
             this.gameObject.GetComponent<BlockSPBoss>().ShowInstru();
             this.player.GetComponent<Rigidbody>().useGravity = true;
             this.player.GetComponent<Rigidbody>().isKinematic = false;
@@ -226,7 +260,7 @@ public class GainEnergy : MonoBehaviour {
                         if (Enemies[i] != null)
                         {
                             CheckIfEmpty++;
-                            if (Vector3.Distance(this.player.transform.position, Enemies[i].transform.position) < prevDistance)
+                            if (Vector3.Distance(this.player.transform.position, Enemies[i].transform.position) < prevDistance && Enemies[i].GetComponent<HealthSystem>().CurrentHp>0)
                             {
                                 prevDistance = Vector3.Distance(this.player.transform.position, Enemies[i].transform.position);
                                 EnemyToAttack = Enemies[i];

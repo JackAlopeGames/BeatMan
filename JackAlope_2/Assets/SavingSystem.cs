@@ -12,7 +12,7 @@ public class SavingSystem : MonoBehaviour {
     public int Points, Thunders, Stars, Coins,Level;
     public float Min, Sec, MinCoins, SecCoins, MinGift, SecGift;
     public GameObject SaveWarning, PlayerAutoUI, PlayerAutoLevel;
-    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass;
+    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch;
 
     public void FetchInMyGame() // this changes depending of your unity project
     {
@@ -60,13 +60,15 @@ public class SavingSystem : MonoBehaviour {
             data.SecGift = this.SecGift;
             data.FiftyPass = FiftyPass;
             data.DojoPass = DojoPass;
+            data.UnlockRunningPunch = UnlockRunningPunch;
+            data.UnlockUpperCut = UnlockUpperCut;
             //writes the object to the file and close it
             bf.Serialize(file, data);
             file.Close();
         }else{
             try
             {
-                if (SaveWarning != null || (this.PlayerAutoUI != null && PlayerAutoLevel != null))
+                if ((SaveWarning != null || (this.PlayerAutoUI != null && PlayerAutoLevel != null)) )
                 {
                     this.SaveWarning.transform.GetChild(0).gameObject.SetActive(true);
                     if (this.PlayerAutoUI != null || PlayerAutoLevel != null)
@@ -104,6 +106,8 @@ public class SavingSystem : MonoBehaviour {
         data.SecGift = this.SecGift;
         data.FiftyPass = FiftyPass;
         data.DojoPass = DojoPass;
+        data.UnlockUpperCut = UnlockUpperCut;
+        data.UnlockRunningPunch = UnlockRunningPunch;
         //writes the object to the file and close it
         bf.Serialize(file, data);
         file.Close();
@@ -119,7 +123,7 @@ public class SavingSystem : MonoBehaviour {
             this.Level = data.Level;
 			this.Points = data.Points;
             this.Thunders = data.Thunders;
-            this.Stars = data.Thunders;
+            this.Stars = data.Stars;
             this.Min = data.Min;
             this.Sec = data.Sec;
             this.Coins = data.Coins;
@@ -132,7 +136,8 @@ public class SavingSystem : MonoBehaviour {
             this.DojoPass = data.DojoPass;
             AvailableCoins = data.AvailableCoins;
             AvailableGift = data.AvailableGift;
-
+            UnlockRunningPunch = data.UnlockRunningPunch;
+            UnlockUpperCut = data.UnlockUpperCut;
         }
 	}
 
@@ -173,5 +178,5 @@ public class SavingSystem : MonoBehaviour {
 class SaveData{
     public int Points, Thunders, Stars,Coins,Level;
     public float Min, Sec, MinCoins, SecCoins, MinGift, SecGift;
-    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass;
+    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch;
 }

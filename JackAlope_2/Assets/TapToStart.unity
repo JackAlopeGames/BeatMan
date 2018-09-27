@@ -499,7 +499,7 @@ RectTransform:
   m_GameObject: {fileID: 273625229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0020003, y: 2.0019987, z: 2.0019987}
+  m_LocalScale: {x: 1.9219203, y: 1.9219186, z: 1.9219186}
   m_Children:
   - {fileID: 950277853}
   - {fileID: 1382209671}
@@ -1078,6 +1078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c140543e6a09a384f966c42db4c0d466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowFullTips: 0
+  SavingSystem: {fileID: 0}
 --- !u!114 &950277856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,6 +1714,8 @@ MonoBehaviour:
   AvailableGift: 0
   FiftyPass: 0
   DojoPass: 0
+  UnlockUpperCut: 0
+  UnlockRunningPunch: 0
 --- !u!4 &1849048222
 Transform:
   m_ObjectHideFlags: 0
