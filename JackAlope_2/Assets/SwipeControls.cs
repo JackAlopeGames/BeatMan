@@ -300,7 +300,7 @@ public class SwipeControls : MonoBehaviour {
 
         swipecontrols.runningMad = true;
         this.RunningToPunch = true;
-        this._RimPresence = 1;
+        this._RimPresence = 0.25f;
         StartCoroutine(WaitToRunningMad());
     }
     private float playerspeed;
@@ -614,7 +614,7 @@ public class SwipeControls : MonoBehaviour {
                         if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && !sideKickBool )
                         {
                             JumpSpecialInCourse = true;
-                            this._RimPresence = 1;
+                            this._RimPresence = 0.25f;
                             if (this.Player.transform.position.z > this.TargetEnemyKick.transform.position.z)
                             {
                                 this.Player.GetComponent<Rigidbody>().AddForce(new Vector3(posEnemy.x * -1, 0, (1 - posEnemy.z) * -1) * this.jumpForce * 2, ForceMode.Impulse);
@@ -631,7 +631,7 @@ public class SwipeControls : MonoBehaviour {
                         else if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && sideKickBool )
                         {
                             JumpSpecialInCourse = true;
-                            this._RimPresence = 1;
+                            this._RimPresence = 0.25f;
                             if (this.Player.transform.position.z > this.TargetEnemyKick.transform.position.z)
                             {
                                 this.Player.GetComponent<Rigidbody>().AddForce(new Vector3(posEnemy.x * -1, 0, (1 - posEnemy.z) * -1) * this.jumpForce * 3, ForceMode.Impulse);
@@ -659,7 +659,7 @@ public class SwipeControls : MonoBehaviour {
                         if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && !sideKickBool)
                         {
                             JumpSpecialInCourse = true;
-                            this._RimPresence = 1;
+                            this._RimPresence = 0.25f;
                             if (this.Player.transform.position.z > this.TargetEnemyKick.transform.position.z)
                             {
                                 this.Player.GetComponent<Rigidbody>().AddForce(new Vector3(posEnemy.x, 0, (1 - posEnemy.z) * -1) * this.jumpForce * 2, ForceMode.Impulse);
@@ -676,7 +676,7 @@ public class SwipeControls : MonoBehaviour {
                         else if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && sideKickBool)
                         {
                             JumpSpecialInCourse = true;
-                            this._RimPresence = 1;
+                            this._RimPresence = 0.25f;
                             if (this.Player.transform.position.z > this.TargetEnemyKick.transform.position.z)
                             {
                                 this.Player.GetComponent<Rigidbody>().AddForce(new Vector3(posEnemy.x, 0, (1 - posEnemy.z) * -1) * this.jumpForce * 3, ForceMode.Impulse);

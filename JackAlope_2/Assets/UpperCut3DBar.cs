@@ -23,28 +23,21 @@ public class UpperCut3DBar : MonoBehaviour {
         {
             if (SwipeControls.GetComponent<Swipe>().Player != null && !SwipeControls.GetComponent<Swipe>().grabing && !SwipeControls.GetComponent<Swipe>().runningMad && !SwipeControls.GetComponent<SwipeControls>().RunningToPunch)
             {
-                try
+                if (SwipeControls.GetComponent<Swipe>().holdForStartHold >= .15f)
                 {
                     this.transform.position = Vector3.Lerp(this.transform.position, new Vector3(SwipeControls.GetComponent<Swipe>().Player.transform.position.x, this.transform.position.y, SwipeControls.GetComponent<Swipe>().Player.transform.position.z), Time.deltaTime * 20);
-
-
                     this.transform.GetChild(0).transform.localScale = new Vector3(((SwipeControls.GetComponent<Swipe>().holdTimer) / 10) * 3.7f, this.transform.GetChild(0).localScale.y, this.transform.GetChild(0).localScale.z);
-                    if (SwipeControls.GetComponent<Swipe>().holdTimer <= SwipeControls.GetComponent<Swipe>().UpperCutTime/3 || Player.GetComponent<HealthSystem>().CurrentHp<=0)
-                    {
-                        this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-                        this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
-                    }
-                    else if(Player.GetComponent<HealthSystem>().CurrentHp >0)
-                    {
-                        this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-                        this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
-                    }
-
-                    this.transform.GetChild(0).GetComponent<Material>().color = Color.Lerp(Color.white, Color.green, SwipeControls.GetComponent<Swipe>().holdTimer);
-
                 }
-                catch { }
-
+                if ((SwipeControls.GetComponent<Swipe>().holdTimer <= SwipeControls.GetComponent<Swipe>().UpperCutTime/3 || Player.GetComponent<HealthSystem>().CurrentHp<=0) && (this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled || this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled))
+                {
+                    this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
+                    this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = false;
+                }
+                else if(Player.GetComponent<HealthSystem>().CurrentHp >0 && (!this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled || !this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled) && SwipeControls.GetComponent<Swipe>().holdTimer > SwipeControls.GetComponent<Swipe>().UpperCutTime / 3)
+                {
+                    this.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+                    this.transform.GetChild(1).GetComponent<MeshRenderer>().enabled = true;
+                }
             }
         }
         else

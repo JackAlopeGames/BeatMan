@@ -2,56 +2,76 @@
 {
 	Properties
 	{
-		_MainTex("Albedo", 2D) = "white" {}
-		_Noise("Noise", 2D) = "white" {}
-		_Lines("Lines", 2D) = "white" {}
-		_Color("Hologram Color", Color) = (0,0,1)
-		_RimPower("Rim Power", Range(0,10)) = 0.5
-		_RimColor("Rim Color", Color) = (1,1,1,1)
-		_Tilling("Tilling", Range(0,6)) = 1
+		_MainTex("Albedo Texture", 2D) = "white" {}
+		_Lines("Hologram Lines Texture", 2D) = "white" {}
+		_Tilling("Tilling", Range(0,1)) = 1
+		_TintColor("Tint Color", Color) = (1,1,1,1)
+		_TintLines("Tint Lines", Color) = (1,1,1,1)
 		_Transparency("Transparency", Range(0.0,1)) = 0.25
+		_CutoutThresh("Cutout Threshold", Range(0.0,1.0)) = 0.2
+		_Distance("Distance", Float) = 1
+		_Amplitude("Amplitude", Float) = 1
+		_Speed("Speed", Float) = 1
+		_Amount("Amount", Range(0.0,1.0)) = 1
+		_SpeedH("Speed Hologram", Range(0.0,1.0)) = 1
 	}
 
-	SubShader
+		SubShader
 	{
-	Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
-	ZWrite Off
-	Blend SrcAlpha OneMinusSrcAlpha
-	ZTest LEqual
-	LOD 200
-	CGPROGRAM
-	#pragma surface surf StandardSpecular fullforwardshadows alpha:blend
+		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
+		LOD 100
 
-	// Use shader model 3.0 target, to get nicer looking lighting
-	#pragma target 3.0
+		ZWrite Off
+		Blend SrcAlpha OneMinusSrcAlpha
 
-	sampler2D _MainTex,_Noise,_Lines;
-	fixed4 _Color;
+		Pass
+		{
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
 
-	float _RimPower, _Transparency;
-	float _Tilling;
-	float4 _RimColor;
+			#include "UnityCG.cginc"
 
-	struct Input
-	{
-		float2 uv_MainTex;
-		float3 viewDir;
-		float3 worldNormal;
-	};
+			struct appdata
+			{
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+			};
 
+			struct v2f
+			{
+				float2 uv : TEXCOORD0;
+				float4 vertex : SV_POSITION;
+			};
 
-	void surf(Input IN, inout SurfaceOutputStandardSpecular  o)
-	{
-		fixed4 main = (tex2D(_MainTex, IN.uv_MainTex)  +( (tex2D(_Noise, IN.uv_MainTex + float2(_Time.x,0).r) + tex2D(_Lines, IN.uv_MainTex * float2(_Tilling, _Tilling) + float2(0, _Time.x * 2) ).r) * (tex2D(_MainTex, IN.uv_MainTex).r)) )* _Color;
-		main.a = _Transparency;
-		o.Albedo = main;
-		float NdotV = 1.0 - saturate(dot(IN.viewDir, IN.worldNormal));
-		o.Emission = _RimColor * pow(NdotV, _RimPower);
-		o.Alpha = main.a;
+			sampler2D _MainTex,_Lines;
+			float4 _MainTex_ST;
+			float4 _TintColor,_TintLines;
+			float _Transparency, _Tilling;
+			float _CutoutThresh;
+			float _Distance;
+			float _Amplitude;
+			float _Speed, _SpeedH;
+			float _Amount;
+
+			v2f vert(appdata v)
+			{
+				v2f o;
+				v.vertex.x += sin(_Time.y * _Speed + v.vertex.y * _Amplitude) * _Distance * _Amount;
+				o.vertex = UnityObjectToClipPos(v.vertex);
+				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+				return o;
+			}
+
+			fixed4 frag(v2f i) : SV_Target
+			{
+				// sample the texture
+				fixed4 col = (tex2D(_MainTex, i.uv) + _TintColor) * (tex2D(_Lines,i.uv * float2(1,_Tilling) + float2(0, _Time.x * _SpeedH)) + _TintLines);
+				col.a = _Transparency;
+				clip(col.r - _CutoutThresh);
+				return col;
+			}
+			ENDCG
+		}
 	}
-
-	ENDCG
-	}
-
-		FallBack "Diffuse"
 }

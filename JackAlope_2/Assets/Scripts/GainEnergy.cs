@@ -24,11 +24,12 @@ public class GainEnergy : MonoBehaviour {
     public GameObject SwipeControls;
     bool dontchangeEnemy;
     public float limit0, limit1;
-
+    public GameObject EnemyWaveSystem;
     void Start () {
         this.player = GameObject.FindGameObjectWithTag("Player");
         this.SwipeControls = GameObject.FindGameObjectWithTag("SwipeControls");
         this.EnemyToAttack = player;
+        this.EnemyWaveSystem = GameObject.FindGameObjectWithTag("Enemies");
 	}
 
     public void GainEnergyPunch(float x)
@@ -54,7 +55,7 @@ public class GainEnergy : MonoBehaviour {
 
     public void DoSpecialMove()
     {
-      
+      Time.timeScale = 1;
       this.enemies = GameObject.FindGameObjectsWithTag("Enemy");
       this.Origins = new Vector3[enemies.Length];
 
@@ -199,6 +200,8 @@ public class GainEnergy : MonoBehaviour {
             {
                 this.restrictors[i].SetActive(true);
             }
+
+            this.EnemyWaveSystem.GetComponent<ActiveCollidersEnemies>().UpdateColliders();
         }
         else
         {
@@ -230,6 +233,7 @@ public class GainEnergy : MonoBehaviour {
             {
                 this.restrictors[i].SetActive(true);
             }
+            this.EnemyWaveSystem.GetComponent<ActiveCollidersEnemies>().UpdateColliders();
             this.GetComponent<Slider>().value = 1;
         }
         dontchangeEnemy = false;
@@ -281,7 +285,7 @@ public class GainEnergy : MonoBehaviour {
             if (EnemyToAttack == player && SpecialAttackIsReady && this.Pointer.activeInHierarchy)
             {
                 this.Pointer.SetActive(false);
-                EnemyToAttack = player;
+               // EnemyToAttack = player;
             }
             if (EnemyToAttack != player && SpecialAttackIsReady && this.Pointer.activeInHierarchy)
             {

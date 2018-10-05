@@ -43,7 +43,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: a9a9c2e49eb73b0438917aae6a74434f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 577a09252a4cf2f4da0ee2a2c8885662, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -63,9 +63,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Amount: 0
+    - _Amplitude: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _CutoutThresh: 0
     - _DetailNormalMapScale: 1
+    - _Distance: 0
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -77,12 +81,15 @@ Material:
     - _RimPower: 7
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _Speed: 0
     - _SrcBlend: 1
-    - _Tilling: 0.5
-    - _Transparency: 0.95
+    - _Tilling: 0.302
+    - _Transparency: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0, g: 0.4705882, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0.91210127, b: 1, a: 1}
+    - _TintColor: {r: 0, g: 0, b: 0, a: 1}
+    - _TintLines: {r: 0.5707547, g: 0.70047176, b: 1, a: 0.45490196}

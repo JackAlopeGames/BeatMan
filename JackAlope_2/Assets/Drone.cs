@@ -8,9 +8,7 @@ public class Drone : MonoBehaviour {
 
     public GameObject bomb;
     GameObject cloneBomb;
-
     void Start () {
-		
 	}
 	
 	// Update is called once per frame

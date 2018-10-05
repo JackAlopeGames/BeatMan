@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GiftForCoins : MonoBehaviour {
@@ -17,7 +18,6 @@ public class GiftForCoins : MonoBehaviour {
         this.SavingSystem.GetComponent<SavingSystem>().Load();
         this.Min = this.SavingSystem.GetComponent<SavingSystem>().MinGift;
         this.Sec = this.SavingSystem.GetComponent<SavingSystem>().SecGift;
-
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class GiftForCoins : MonoBehaviour {
         {
             Sec -= Time.deltaTime;
             this.SavingSystem.GetComponent<SavingSystem>().SecGift = this.Sec;
-            try
+            if (SceneManager.GetSceneByName("MainMenu").isLoaded)
             {
                 Seconds.GetComponent<Text>().text = ":" + (int)Sec;
                 if (Sec < 10)
@@ -41,36 +41,33 @@ public class GiftForCoins : MonoBehaviour {
                     Seconds.GetComponent<Text>().text = ":0" + (int)Sec;
                 }
             }
-            catch { }
             if (Sec < 0)
             {
                 this.Min--;
                 this.SavingSystem.GetComponent<SavingSystem>().MinGift = this.Min;
                 Sec = 59;
                 this.SavingSystem.GetComponent<SavingSystem>().SecGift = this.Sec;
-                try
+                if (SceneManager.GetSceneByName("MainMenu").isLoaded)
                 {
                     Minutes.GetComponent<Text>().text = "0" + Min;
                 }
-                catch { }
             }
 
             if (Min < 00)
             {
 
-                try
+                Min = 29;
+                this.SavingSystem.GetComponent<SavingSystem>().MinGift = this.Min;
+                if (SceneManager.GetSceneByName("MainMenu").isLoaded)
                 {
                     this.Minutes.SetActive(false);
                     this.Seconds.SetActive(false);
-                    Min = 29;
-                    this.SavingSystem.GetComponent<SavingSystem>().MinGift = this.Min;
-                  
                 }
-                catch { }
             }
 
-            try
+            if (SceneManager.GetSceneByName("MainMenu").isLoaded)
             {
+
                 if (this.Min < 10)
                 {
                     if (Minutes.GetComponent<Text>().text != "0" + this.Min)
@@ -82,20 +79,16 @@ public class GiftForCoins : MonoBehaviour {
                 {
                     Minutes.GetComponent<Text>().text = this.Min + "";
                 }
-            }
-            catch { }
 
-            try
-            {
-                if (!mask.active)
-                {
-                    mask.SetActive(true);
-                    coins.transform.parent.gameObject.SetActive(false);
-                    coins.SetActive(false);
-                    this.Bubble.SetActive(true);
-                    this.Minutes.SetActive(true);
-                    this.Seconds.SetActive(true);
-                }
+                if (!mask.activeInHierarchy)
+                    {
+                        mask.SetActive(true);
+                        coins.transform.parent.gameObject.SetActive(false);
+                        coins.SetActive(false);
+                        this.Bubble.SetActive(true);
+                        this.Minutes.SetActive(true);
+                        this.Seconds.SetActive(true);
+                    }
 
                 if (Min <= 0 && Sec <= 1)
                 {
@@ -108,18 +101,14 @@ public class GiftForCoins : MonoBehaviour {
                     this.SavingSystem.GetComponent<SavingSystem>().AvailableGift = true;
                     this.SavingSystem.GetComponent<SavingSystem>().Save();
                 }
-                /*
-                if (Min >=10  && Min <= 19 && this.Minutes.transform.localPosition.x != 106)
-                {
-                    this.Minutes.transform.localPosition = new Vector3(106, this.Minutes.transform.localPosition.y, this.Minutes.transform.localPosition.z);
-                }
-                else if((Min<10 || Min>=20) && this.Minutes.transform.localPosition.x != 35)
-                {
-                    this.Minutes.transform.localPosition = new Vector3(35, this.Minutes.transform.localPosition.y, this.Minutes.transform.localPosition.z);
-                }
-                */
             }
-            catch { }
+
+            if (Min <= 0 && Sec <= 1)
+            {
+                this.SavingSystem.GetComponent<SavingSystem>().AvailableGift = true;
+                this.SavingSystem.GetComponent<SavingSystem>().Save();
+            }
+
         }
     }
 

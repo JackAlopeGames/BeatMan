@@ -22,7 +22,7 @@ public class BossWarn : MonoBehaviour {
         {
             this.AudioSource.GetComponent<AudioSource>().clip = Boss_Song;
             this.AudioSource.GetComponent<AudioSource>().Play();
-            GlobalAudioPlayer.PlaySFX("Alert");
+            GlobalAudioPlayer.PlaySFX("Danger");
             BossWarning.SetActive(true);
             StartCoroutine(flickr());
         }

@@ -14,6 +14,7 @@ public class CalmEnemies : MonoBehaviour {
     public GameObject Player, SwipeControls;
     private bool specialChange;
     public bool boss;
+    public int distanceToDetectPlayer;
 	void OnEnable () {
         if (boss)
         {
@@ -110,29 +111,36 @@ public class CalmEnemies : MonoBehaviour {
             this.GetComponent<EnemyAI>().attackRangeDistance = Vector3.Distance(this.spots[rSpot].transform.position, this.transform.position);
             this.GetComponent<EnemyAI>().target = this.Player;
         }
-        int r = Random.Range(2, 3);
+        int r = Random.Range(2, 4);
         yield return new WaitForSeconds(r);
-        if ((!boss && this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves[this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves.Length - 1].EnemyList.Count > 1) || SceneManager.GetSceneByName("Level_02").isLoaded)
+        if (Vector3.Distance(this.transform.position, this.Player.transform.position) < distanceToDetectPlayer)
         {
-            this.GetComponent<EnemyAI>().walkSpeed = speed;
-            this.GetComponent<EnemyAI>().target = this.Player;
-            int r2 = Random.Range(6, 9);
-            try
+            if ((!boss && this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves[this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves.Length - 1].EnemyList.Count > 1) || SceneManager.GetSceneByName("Level_02").isLoaded)
             {
-                if (!SwipeControls.GetComponent<SwipeControls>().RunningToPunch && !SwipeControls.GetComponent<Swipe>().runningMad && SwipeControls.GetComponent<Swipe>().holdTimer <= 0 && !SwipeControls.GetComponent<SwipeControls>().JumpSpecialInCourse && !SceneManager.GetSceneByName("Level_02").isLoaded)
+                this.GetComponent<EnemyAI>().walkSpeed = speed;
+                this.GetComponent<EnemyAI>().target = this.Player;
+                int r2 = Random.Range(6, 9);
+                try
                 {
-                    this.GetComponent<EnemyAI>().attackInterval = 2;
+                    if (!SwipeControls.GetComponent<SwipeControls>().RunningToPunch && !SwipeControls.GetComponent<Swipe>().runningMad && SwipeControls.GetComponent<Swipe>().holdTimer <= 0 && !SwipeControls.GetComponent<SwipeControls>().JumpSpecialInCourse && !SceneManager.GetSceneByName("Level_02").isLoaded)
+                    {
+                        this.GetComponent<EnemyAI>().attackInterval = 2;
+                    }
                 }
+                catch { }
+                this.GetComponent<EnemyAI>().attackRangeDistance = CloseDistance;
+                yield return new WaitForSeconds(r2);
             }
-            catch {  }
-            this.GetComponent<EnemyAI>().attackRangeDistance = CloseDistance;
-            yield return new WaitForSeconds(r2);
-        }
-        if (boss && (this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves[this.transform.parent.GetComponent<EnemyWaveSystem>().currentWave].EnemyList.Count <= 1 || this.GetComponent<HealthSystem>().CurrentHp < this.GetComponent<HealthSystem>().MaxHp/2))
-        {
-            this.GetComponent<EnemyAI>().walkSpeed = speed;
-            this.GetComponent<EnemyAI>().target = this.Player;
-            this.GetComponent<EnemyAI>().attackInterval = 0;
+            if (boss && (this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves[this.transform.parent.GetComponent<EnemyWaveSystem>().currentWave].EnemyList.Count <= 1 || this.GetComponent<HealthSystem>().CurrentHp < this.GetComponent<HealthSystem>().MaxHp / 2))
+            {
+                this.GetComponent<EnemyAI>().walkSpeed = speed;
+                this.GetComponent<EnemyAI>().target = this.Player;
+                this.GetComponent<EnemyAI>().attackInterval = 0;
+            }
+            else
+            {
+                StartCoroutine(HuntingTime());
+            }
         }
         else
         {

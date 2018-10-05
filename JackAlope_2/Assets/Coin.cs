@@ -11,8 +11,14 @@ public class Coin : MonoBehaviour {
     private float realdistance;
     public float speed;
     public float Maxdistance { get { return maxdistance; } set {  maxdistance = value; } }
+
+    public bool CoinSack;
     void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
+        if (CoinSack)
+        {
+            maxdistance = 15;
+        }
 	}
 	
 	// Update is called once per frame
@@ -67,7 +73,7 @@ public class Coin : MonoBehaviour {
                     BC.GetComponent<BannerController>().coinsCurrent++;
                     SS.GetComponent<SavingSystem>().Coins++;
                 }
-                if(this.gameObject.tag == "CoinsSack")
+                if(this.gameObject.tag == "CoinsSack" || CoinSack)
                 {
                     BC.GetComponent<BannerController>().coins+=10;
                     BC.GetComponent<BannerController>().coinsCurrent+=10;
@@ -79,10 +85,31 @@ public class Coin : MonoBehaviour {
             GameObject CoinsText_3D = GameObject.FindGameObjectWithTag("CoinsText_3D");
             CoinsText_3D.GetComponent<MeshRenderer>().enabled = true;
             CoinsText_3D.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-            CoinsText_3D.GetComponent<CoinText_3D>().coins++;
+            if (!CoinSack)
+            {
+                CoinsText_3D.GetComponent<CoinText_3D>().coins++;
+            }
+            else
+            {
+                CoinsText_3D.GetComponent<CoinText_3D>().coins += 10;
+            }
             CoinsText_3D.GetComponent<CoinText_3D>().HideThis();
-            Destroy(this.gameObject);
+
+            if (!CoinSack)
+            {
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                GlobalAudioPlayer.PlaySFX("ItemPickup");
+                this.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+                this.gameObject.GetComponent<BoxCollider>().enabled = false;
+                this.maxdistance = 0;
+                this.speed = 0;
+            }
             
+
         }
     }
 

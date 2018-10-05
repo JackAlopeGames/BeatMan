@@ -75,7 +75,7 @@ Material:
     - _SpecularHighlights: 1
     - _Speed: 1
     - _SrcBlend: 1
-    - _Transparency: 0.089
+    - _Transparency: 0.1
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:

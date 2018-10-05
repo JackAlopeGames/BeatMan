@@ -47,6 +47,7 @@ public class Swipe : MonoBehaviour {
     public float TimeMoving { get { return timeMoving; } set { timeMoving = value; } }
     private bool NotHold;
     private float HoldForStartHold;
+    public float holdForStartHold { get { return HoldForStartHold; } set { HoldForStartHold = value; } }
     public float magnitude;
     float magnitudejump;
     public GameObject energybar;

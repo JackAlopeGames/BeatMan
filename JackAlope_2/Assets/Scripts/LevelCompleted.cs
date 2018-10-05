@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class LevelCompleted : MonoBehaviour {
 
-    
-	// Use this for initialization
-	void Start () {
-		
-	}
+
+    // Use this for initialization
+    GameObject controls;
+	void OnEnable () {
+        controls = GameObject.FindGameObjectWithTag("SwipeControls");
+        controls.GetComponent<Swipe>().BlockForTutorial = true;
+        controls.GetComponent<Swipe>().BlockPunchTap = true;
+        controls.GetComponent<Swipe>().Player.GetComponent<HealthSystem>().invulnerable = true;
+    }
 	
     public void NextLevel()
     {

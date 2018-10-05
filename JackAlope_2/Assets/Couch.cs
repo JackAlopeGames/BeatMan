@@ -285,10 +285,14 @@ public class Couch : MonoBehaviour {
                 {
                     this.TextBox.GetComponent<MeshRenderer>().materials[0].mainTexture = NotMe;
                     TextBox.SetActive(true);
+                    TrainingRobot.GetComponent<EnemyAI>().enableAI = true;
+                    TrainingRobot.GetComponent<EnemyAI>().enableAI = false;
                 }
                 else if (Vector3.Distance(this.transform.position, this.Player.transform.position) >= 2 && TextBox.activeInHierarchy)
                 {
                     TextBox.SetActive(false);
+                    TrainingRobot.GetComponent<EnemyAI>().enableAI = true;
+                    TrainingRobot.GetComponent<EnemyAI>().enableAI = false;
                 }
             }
             if (this.SwipeControls.GetComponent<Swipe>().grabing && stage3 && waitingToGrab)

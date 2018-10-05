@@ -35,4 +35,18 @@ public class ActiveCollidersEnemies : MonoBehaviour {
             catch { }
         }
 	}
+
+    public void UpdateColliders()
+    {
+        for (int i = 0; i < Colliders.Length; i++)
+        {
+            Colliders[i].SetActive(false);
+        }
+        currentWave = this.gameObject.GetComponent<EnemyWaveSystem>().currentWave;
+        try
+        {
+            Colliders[currentWave].SetActive(true);
+        }
+        catch { }
+    }
 }

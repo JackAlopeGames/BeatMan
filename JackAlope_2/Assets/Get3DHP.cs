@@ -43,11 +43,13 @@ public class Get3DHP : MonoBehaviour {
             {
                 Destroy(this.gameObject);
             }
-        }
 
-        if(this.gameObject.tag == "ShadowHP")
+          
+        }
+        if (this.gameObject.tag == "ShadowHP" && this.GetComponent<TextMesh>().text != this.transform.parent.GetComponent<TextMesh>().text)
         {
             this.GetComponent<TextMesh>().text = this.transform.parent.GetComponent<TextMesh>().text;
         }
-	}
+
+    }
 }
