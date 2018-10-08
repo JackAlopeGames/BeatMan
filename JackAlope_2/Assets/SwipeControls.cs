@@ -513,13 +513,14 @@ public class SwipeControls : MonoBehaviour {
                     this.ManualRightJumpDirection = false;
                 }
 
-                if ((swipecontrols.SwipeUp) && EnergyFill.GetComponent<Slider>().value < .15 && !swipecontrols.grabing)
+                if ((swipecontrols.SwipeUp) && (EnergyFill.GetComponent<Slider>().value < .15 || swipecontrols.BlockSpecialJump) && !swipecontrols.grabing)
                 {
                     Jump();
                 }
-                else if ((swipecontrols.SwipeUp) && EnergyFill.GetComponent<Slider>().value >= .15f && !swipecontrols.grabing)
+                else if ((swipecontrols.SwipeUp) && (EnergyFill.GetComponent<Slider>().value >= .15f && !swipecontrols.BlockSpecialJump) && !swipecontrols.grabing)
                 {
                     JumpKick();
+                    
                 }
             }
 
@@ -527,18 +528,17 @@ public class SwipeControls : MonoBehaviour {
             {
                 if (this.Player.GetComponent<PlayerMovement>().jumpInProgress && !swipecontrols.grabing && !RunningToPunch)
                 {
-                    if (Vector3.Distance(TargetEnemyKick.transform.position, this.Player.transform.position) > 1 && !JumpRight && !JumpLeft && (EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse))
+                    if (Vector3.Distance(TargetEnemyKick.transform.position, this.Player.transform.position) > 1 && !JumpRight && !JumpLeft && (EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && !swipecontrols.BlockSpecialJump)
                     {
-                        {
-                            if (this.right && !JumpLeft)
+                        
+                        if (this.right && !JumpLeft)
                             {
                                 JumpRight = true;
                             }
-                            else if (this.left && !JumpRight)
-                            {
-                                JumpLeft = true;
+                        else if (this.left && !JumpRight)
+                        {
+                            JumpLeft = true;
 
-                            }
                         }
                     }
 
@@ -547,8 +547,9 @@ public class SwipeControls : MonoBehaviour {
 
                         this.Player.GetComponent<PlayerMovement>().updateDirection();
 
-                        if (EnergyFill.GetComponent<Slider>().value < .15f && !sideKickBool)
+                        if ((EnergyFill.GetComponent<Slider>().value < .15f  || swipecontrols.BlockSpecialJump) && !sideKickBool)
                         {
+                            
                             if (this.Player.GetComponent<PlayerMovement>().currentDirection == DIRECTION.Right)
                             {
                                 //this.Player.GetComponent<Rigidbody>().AddForce(Vector3.right * -1 * this.jumpForce, ForceMode.Impulse);
@@ -578,7 +579,7 @@ public class SwipeControls : MonoBehaviour {
 
                         this.Player.GetComponent<PlayerMovement>().updateDirection();
 
-                        if (EnergyFill.GetComponent<Slider>().value < .15f && !sideKickBool)
+                        if ((EnergyFill.GetComponent<Slider>().value < .15f || swipecontrols.BlockSpecialJump) && !sideKickBool)
                         {
                             if (this.Player.GetComponent<PlayerMovement>().currentDirection == DIRECTION.Left)
                             {
@@ -605,13 +606,14 @@ public class SwipeControls : MonoBehaviour {
 
                     if (JumpRight && !this.Player.GetComponent<PlayerMovement>().IsGrounded() )
                     {
+
                         this.Player.GetComponent<PlayerMovement>().updateDirection();
                         if (Vector3.Distance(TargetEnemyKick.transform.position, this.swipecontrols.Player.transform.position) < 1.5f && !FarObjective)
                         {
                             posEnemy.x = posEnemy.x + .1f;
                             FarObjective = true;
                         }
-                        if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && !sideKickBool )
+                        if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && !sideKickBool)
                         {
                             JumpSpecialInCourse = true;
                             this._RimPresence = 0.25f;
@@ -628,7 +630,7 @@ public class SwipeControls : MonoBehaviour {
                                 this.Player.GetComponent<Rigidbody>().AddForce(new Vector3(posEnemy.x * -1, 0, 0) * this.jumpForce * 2, ForceMode.Impulse);
                             }
                         }
-                        else if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && sideKickBool )
+                        else if ((EnergyFill.GetComponent<Slider>().value >= .15f || JumpSpecialInCourse) && sideKickBool)
                         {
                             JumpSpecialInCourse = true;
                             this._RimPresence = 0.25f;
@@ -927,7 +929,7 @@ public class SwipeControls : MonoBehaviour {
             }
             else if (Vector3.Distance(this.Player.transform.position,EnemiesToHit[i].transform.position ) <= 10f && !EnemiesToHit[i].GetComponent<EnemyAI>().isDead && EnemiesToHit[i].GetComponent<HealthSystem>().CurrentHp !=0)
             {
-                if(prevDist> Vector3.Distance(this.Player.transform.position, EnemiesToHit[i].transform.position)){
+                if(prevDist> Vector3.Distance(this.Player.transform.position, EnemiesToHit[i].transform.position) && !swipecontrols.BlockSpecialJump){
                     this.TargetEnemyKick = this.EnemiesToHit[i];
                     prevDist = Vector3.Distance(this.Player.transform.position, EnemiesToHit[i].transform.position);
                 }

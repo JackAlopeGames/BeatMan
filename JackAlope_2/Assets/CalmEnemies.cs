@@ -133,7 +133,7 @@ public class CalmEnemies : MonoBehaviour {
             }
             if (boss && (this.transform.parent.GetComponent<EnemyWaveSystem>().EnemyWaves[this.transform.parent.GetComponent<EnemyWaveSystem>().currentWave].EnemyList.Count <= 1 || this.GetComponent<HealthSystem>().CurrentHp < this.GetComponent<HealthSystem>().MaxHp / 2))
             {
-                this.GetComponent<EnemyAI>().walkSpeed = speed;
+                this.GetComponent<EnemyAI>().walkSpeed = 3;
                 this.GetComponent<EnemyAI>().target = this.Player;
                 this.GetComponent<EnemyAI>().attackInterval = 0;
             }

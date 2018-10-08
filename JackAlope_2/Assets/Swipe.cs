@@ -70,11 +70,12 @@ public class Swipe : MonoBehaviour {
     private GameObject ControlSensibility;
     public float UpperCutTime;
     public bool BlockForTutorial, BlockPunchTap;
-    public bool BlockGrab, BlockRunningPunch, BlockJump,BlockHold;
+    public bool BlockGrab, BlockRunningPunch, BlockJump,BlockHold,BlockSpecialJump;
     public void Start()
     {
         BlockRunningPunch = true;
         BlockHold = true;
+        BlockSpecialJump = true;
         UpperCutTime = .25f;
         try
         {

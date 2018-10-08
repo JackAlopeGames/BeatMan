@@ -12,7 +12,7 @@ public class SavingSystem : MonoBehaviour {
     public int Points, Thunders, Stars, Coins,Level;
     public float Min, Sec, MinCoins, SecCoins, MinGift, SecGift;
     public GameObject SaveWarning, PlayerAutoUI, PlayerAutoLevel;
-    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch;
+    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch, UnlockJumpKick;
 
     public void FetchInMyGame() // this changes depending of your unity project
     {
@@ -62,6 +62,7 @@ public class SavingSystem : MonoBehaviour {
             data.DojoPass = DojoPass;
             data.UnlockRunningPunch = UnlockRunningPunch;
             data.UnlockUpperCut = UnlockUpperCut;
+            data.UnlockJumpKick = UnlockJumpKick;
             //writes the object to the file and close it
             bf.Serialize(file, data);
             file.Close();
@@ -108,6 +109,7 @@ public class SavingSystem : MonoBehaviour {
         data.DojoPass = DojoPass;
         data.UnlockUpperCut = UnlockUpperCut;
         data.UnlockRunningPunch = UnlockRunningPunch;
+        data.UnlockJumpKick = UnlockJumpKick;
         //writes the object to the file and close it
         bf.Serialize(file, data);
         file.Close();
@@ -138,6 +140,7 @@ public class SavingSystem : MonoBehaviour {
             AvailableGift = data.AvailableGift;
             UnlockRunningPunch = data.UnlockRunningPunch;
             UnlockUpperCut = data.UnlockUpperCut;
+            UnlockJumpKick = data.UnlockJumpKick;
         }
 	}
 
@@ -178,5 +181,5 @@ public class SavingSystem : MonoBehaviour {
 class SaveData{
     public int Points, Thunders, Stars,Coins,Level;
     public float Min, Sec, MinCoins, SecCoins, MinGift, SecGift;
-    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch;
+    public bool Tutorial0, AvailableCoins, AvailableGift, FiftyPass, DojoPass, UnlockUpperCut, UnlockRunningPunch, UnlockJumpKick;
 }

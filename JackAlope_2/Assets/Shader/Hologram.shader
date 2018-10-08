@@ -66,7 +66,8 @@
 			fixed4 frag(v2f i) : SV_Target
 			{
 				// sample the texture
-				fixed4 col = (tex2D(_MainTex, i.uv) + _TintColor) * (tex2D(_Lines,i.uv * float2(1,_Tilling) + float2(0, _Time.x * _SpeedH)) + _TintLines);
+				fixed4 lines = tex2D(_Lines,i.uv * float2(1,_Tilling) + float2(0, _Time.x * _SpeedH));
+				fixed4 col = (tex2D(_MainTex, i.uv) *_TintColor) + lines * _TintLines;
 				col.a = _Transparency;
 				clip(col.r - _CutoutThresh);
 				return col;

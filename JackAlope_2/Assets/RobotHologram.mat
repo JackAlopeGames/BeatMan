@@ -106,5 +106,5 @@ Material:
     - _ColorE: {r: 0, g: 0.9620757, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0.02352941, g: 0.40466943, b: 1, a: 1}
-    - _TintColor: {r: 0, g: 0.35981894, b: 1, a: 1}
-    - _TintLines: {r: 0, g: 0.18730927, b: 1, a: 1}
+    - _TintColor: {r: 0.7028302, g: 0.81004435, b: 1, a: 1}
+    - _TintLines: {r: 0.13679248, g: 0.2992786, b: 1, a: 1}

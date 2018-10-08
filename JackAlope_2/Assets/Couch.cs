@@ -270,6 +270,7 @@ public class Couch : MonoBehaviour {
             }
             if ((timeStage3 >= DialogueBoxesTime || changeDialog3 >= 1) && !this.SwipeControls.GetComponent<Swipe>().grabing)
             {
+                this.SwipeControls.GetComponent<SwipeControls>().distanceToGrab = 1.5f; ///extra
                 this.ButtonTap.SetActive(false);
                 startCountingStage3 = false;
                 this.SwipeControls.GetComponent<Swipe>().BlockForTutorial = false;
@@ -287,6 +288,9 @@ public class Couch : MonoBehaviour {
                     TextBox.SetActive(true);
                     TrainingRobot.GetComponent<EnemyAI>().enableAI = true;
                     TrainingRobot.GetComponent<EnemyAI>().enableAI = false;
+                    this.SwipeControls.GetComponent<Swipe>().BlockForTutorial = false; //extra
+                    this.SwipeControls.GetComponent<Swipe>().BlockPunchTap = false;//extra
+                    this.SwipeControls.GetComponent<SwipeControls>().distanceToGrab = 1.5f;//extra
                 }
                 else if (Vector3.Distance(this.transform.position, this.Player.transform.position) >= 2 && TextBox.activeInHierarchy)
                 {

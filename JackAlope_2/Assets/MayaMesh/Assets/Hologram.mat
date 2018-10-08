@@ -82,8 +82,9 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _Speed: 0
+    - _SpeedH: 1
     - _SrcBlend: 1
-    - _Tilling: 0.302
+    - _Tilling: 0.025
     - _Transparency: 1
     - _UVSec: 0
     - _ZWrite: 1
@@ -91,5 +92,5 @@ Material:
     - _Color: {r: 0, g: 0.4705882, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _RimColor: {r: 0, g: 0.91210127, b: 1, a: 1}
-    - _TintColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintLines: {r: 0.5707547, g: 0.70047176, b: 1, a: 0.45490196}
+    - _TintColor: {r: 0, g: 0.91119623, b: 1, a: 1}
+    - _TintLines: {r: 0, g: 0.36750436, b: 1, a: 1}

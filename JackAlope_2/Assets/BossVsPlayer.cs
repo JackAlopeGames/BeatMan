@@ -28,12 +28,16 @@ public class BossVsPlayer : MonoBehaviour {
     IEnumerator DisplayBvP()
     {
         CameraFather.GetComponent<CameraFollow>().target = this.transform;
+        CameraFather.GetComponent<CameraFollow>().distanceToTarget = -5;
+        CameraFather.GetComponent<CameraFollow>().heightOffset = 8;
         yield return new WaitForSeconds(1);
         BossVsPlayerImage.SetActive(true);
         GlobalAudioPlayer.PlaySFX("Alert");
-        Time.timeScale = 0.1f;
-        yield return new WaitForSeconds(.3f);
+        Time.timeScale = 0.05f;
+        yield return new WaitForSeconds(.15f);
         CameraFather.GetComponent<CameraFollow>().target = this.gameObject.GetComponent<CalmEnemies>().Player.transform;
+        CameraFather.GetComponent<CameraFollow>().distanceToTarget = 10;
+        CameraFather.GetComponent<CameraFollow>().heightOffset = -2.5f;
         BossVsPlayerImage.SetActive(false);
         Time.timeScale = 1;
     }

@@ -9,6 +9,7 @@ public class CheckIfDojoPassMenu : MonoBehaviour {
     public GameObject PlayButton;
     public GameObject MaskMonitor;
     public GameObject HandAnim;
+    public GameObject LevelIntroPointer;
 	// Use this for initialization
 	void Start () {
         try
@@ -19,6 +20,7 @@ public class CheckIfDojoPassMenu : MonoBehaviour {
                 PlayButton.GetComponent<Button>().onClick.Invoke();
                 MaskMonitor.SetActive(true);
                 HandAnim.SetActive(true);
+                LevelIntroPointer.SetActive(true);
             }
         }
         catch { }
@@ -31,6 +33,8 @@ public class CheckIfDojoPassMenu : MonoBehaviour {
         if (BC.GetComponent<ThunderLoading>().ThunderCount != 18 && BC.GetComponent<ThunderLoading>().ThunderCount != 20)
         {
             BC.GetComponent<ThunderLoading>().ThunderCount = 18;
+            SavingSystem.GetComponent<SavingSystem>().Thunders = 18;
+            SavingSystem.GetComponent<SavingSystem>().Save();
         }
     }
 	

@@ -105,9 +105,10 @@ Material:
     - _SpecSource: 0
     - _SpecularHighlights: 1
     - _Speed: 2
+    - _SpeedH: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Tilling: 0.205
+    - _Tilling: 0.215
     - _Transparency: 1
     - _UVSec: 0
     - _WorkflowMode: 1
@@ -120,5 +121,5 @@ Material:
     - _RimColor: {r: 0, g: 0.9138584, b: 1, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
-    - _TintColor: {r: 0, g: 0.2095184, b: 0.5849056, a: 1}
-    - _TintLines: {r: 0.0141509175, g: 0.3174978, b: 1, a: 1}
+    - _TintColor: {r: 0, g: 0.8282521, b: 1, a: 1}
+    - _TintLines: {r: 0.2716714, g: 0.3312366, b: 0.5188679, a: 1}
